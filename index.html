@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Katalog Paket Produk</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style id="theme-variables">
+      :root {
+        --bg-main: #faf9f6;
+        --bg-card: #ffffff;
+        --text-primary: #121212;
+        --text-secondary: #525252;
+        --accent: #B38B4D;
+        --accent-bright: #8a6a35;
+        --status-success: #064e3b;
+        --status-warning: #B38B4D;
+        --status-error: #7f1d1d;
+
+        --color-border: var(--accent);
+        --color-text-primary: var(--text-primary);
+        --color-text-secondary: var(--text-secondary);
+        --color-success: var(--status-success);
+        --color-warning: var(--status-warning);
+        --color-error: var(--status-error);
+        --bg-panel: var(--bg-card);
+        --color-border-glow: rgba(179, 139, 77, 0.4);
+        --color-border-mid: rgba(179, 139, 77, 0.3);
+        --color-border-dim: rgba(179, 139, 77, 0.1);
+      }
+    </style>
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: var(--bg-main);
+        color: var(--text-primary);
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        min-height: 100vh;
+      }
+      .font-brand {
+        font-family: 'Inter', sans-serif;
+        font-weight: 800;
+        letter-spacing: 0.02em;
+      }
+      .font-serif-data {
+        font-family: 'Inter', sans-serif;
+        font-weight: 700;
+      }
+      #root {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        min-height: 100vh;
+        width: 100vw;
+      }
+      .app-canvas {
+        width: 1000px;
+        min-height: 1000px;
+        height: auto;
+        position: relative;
+        background-color: var(--bg-main);
+        box-shadow: 0 50px 100px -20px rgba(0,0,0,0.9);
+      }
+      .luxury-gradient-border {
+        border: 1px solid transparent;
+        background: linear-gradient(var(--bg-card), var(--bg-card)) padding-box,
+                    linear-gradient(to bottom right, var(--accent), transparent, var(--accent)) border-box;
+      }
+      .gold-glow { box-shadow: 0 0 30px -10px var(--color-border-glow); }
+      .text-glow-gold { text-shadow: 0 0 10px rgba(179, 139, 77, 0.4); }
+      
+      .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+      .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+      .custom-scrollbar::-webkit-scrollbar-thumb { background: var(--color-border-mid); border-radius: 10px; }
+      
+      @keyframes softPulse {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.8; transform: scale(1.02); }
+      }
+      .animate-soft-pulse { animation: softPulse 4s infinite ease-in-out; }
+
+      main {
+        height: auto;
+      }
+
+      /* Scoped for Readability optimization */
+      .view-readability-optimized {
+        font-family: 'Inter', sans-serif !important;
+      }
+      .view-readability-optimized *:not(.font-brand) {
+        font-family: 'Inter', sans-serif !important;
+      }
+      .view-readability-optimized p, 
+      .view-readability-optimized span, 
+      .view-readability-optimized li, 
+      .view-readability-optimized td,
+      .view-readability-optimized th,
+      .view-readability-optimized div:not(.font-brand) {
+        font-weight: 600;
+      }
+      .view-readability-optimized .font-bold { font-weight: 700 !important; }
+      .view-readability-optimized .font-black { font-weight: 900 !important; }
+      .view-readability-optimized .font-extrabold { font-weight: 800 !important; }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "vite": "https://esm.sh/vite@^7.3.1",
+    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2"
+  }
+}
+</script>
+</head>
+  <body>
+    <div id="root"></div>
+
+    <div id="theme-switcher-container">
+      <div id="theme-menu" style="display:none;" class="bg-[#ffffff]/95 backdrop-blur-xl border border-black/10 p-2 rounded-2xl shadow-2xl mb-3 flex flex-col gap-0.5 w-64 fixed bottom-16 right-4 z-[300] max-h-[70vh] overflow-y-auto custom-scrollbar">
+        <div class="px-3 py-2 border-b border-black/5 mb-1 sticky top-0 bg-white/80 backdrop-blur-md z-10">
+          <span class="text-[9px] font-black text-black/40 uppercase tracking-[0.2em]">Design Palette</span>
+        </div>
+        
+        <!-- PALETTES -->
+        <div id="palette-list" class="grid grid-cols-1 gap-0.5">
+          <!-- Items will be injected by script -->
+        </div>
+      </div>
+      <button onclick="toggleThemeMenu()" class="w-10 h-10 bg-black/5 backdrop-blur-md hover:bg-black/10 border border-black/10 rounded-full flex items-center justify-center text-black/30 hover:text-black transition-all shadow-xl fixed bottom-4 right-20 z-[300]">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.172-1.172a4 4 0 115.656 5.656l-1.172 1.172" /></svg>
+      </button>
+    </div>
+
+    <script>
+      const THEMES = {
+        IVORY_EXECUTIVE: { name: "Ivory Executive", accent: "#B38B4D", bg: "#faf9f6", card: "#ffffff", text: "#121212" },
+        ONYX_NOIR: { name: "Onyx Noir", accent: "#FFFFFF", bg: "#0a0a0a", card: "#121212", text: "#f0f0f0" },
+        MIDNIGHT_GOLD: { name: "Midnight Gold", accent: "#B38B4D", bg: "#121212", card: "#1a1a1a", text: "#e0e0e0" },
+        SAPPHIRE_SILVER: { name: "Sapphire Silver", accent: "#8E9EB0", bg: "#f0f4f8", card: "#ffffff", text: "#2d3748" },
+        EMERALD_SAGE: { name: "Emerald Sage", accent: "#748E63", bg: "#f5f7f2", card: "#ffffff", text: "#2f352a" },
+        ROYAL_BURGUNDY: { name: "Royal Burgundy", accent: "#A67B7B", bg: "#faf7f7", card: "#ffffff", text: "#3d2b2b" },
+        SLATE_MODERN: { name: "Slate Modern", accent: "#64748b", bg: "#f8fafc", card: "#ffffff", text: "#1e293b" },
+        COCOA_CREAM: { name: "Cocoa Cream", accent: "#8b5e3c", bg: "#faf6f2", card: "#ffffff", text: "#3c2f25" },
+        PEARL_MINIMAL: { name: "Pearl Minimal", accent: "#444444", bg: "#ffffff", card: "#fcfcfc", text: "#111111" },
+        CHAMPAGNE_ROSE: { name: "Champagne Rose", accent: "#D4AF37", bg: "#fffcf0", card: "#ffffff", text: "#2c2a20" },
+        PLATINUM_SLATE: { name: "Platinum Slate", accent: "#94a3b8", bg: "#1e293b", card: "#334155", text: "#f1f5f9" },
+        DEEP_CARBON: { name: "Deep Carbon", accent: "#f97316", bg: "#0f172a", card: "#1e293b", text: "#f8fafc" }
+      };
+
+      function toggleThemeMenu() {
+        const menu = document.getElementById('theme-menu');
+        menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+      }
+
+      function applyPreset(id) {
+        const theme = THEMES[id] || THEMES.IVORY_EXECUTIVE;
+        const styleTag = document.getElementById('theme-variables');
+        
+        styleTag.innerHTML = `
+          :root {
+            --bg-main: ${theme.bg};
+            --bg-card: ${theme.card};
+            --text-primary: ${theme.text};
+            --text-secondary: ${id.includes('NOIR') || id.includes('MIDNIGHT') || id.includes('CARBON') ? '#a0a0a0' : '#525252'};
+            --accent: ${theme.accent};
+            --accent-bright: ${theme.accent};
+            --status-success: ${id.includes('NOIR') || id.includes('MIDNIGHT') ? '#22c55e' : '#064e3b'};
+            --status-warning: ${theme.accent};
+            --status-error: ${id.includes('NOIR') || id.includes('MIDNIGHT') ? '#ef4444' : '#7f1d1d'};
+
+            --color-border: var(--accent);
+            --color-text-primary: var(--text-primary);
+            --color-text-secondary: var(--text-secondary);
+            --color-success: var(--status-success);
+            --color-warning: var(--status-warning);
+            --color-error: var(--status-error);
+            --bg-panel: var(--bg-card);
+            --color-border-glow: ${theme.accent}66;
+            --color-border-mid: ${theme.accent}4d;
+            --color-border-dim: ${theme.accent}1a;
+          }
+        `;
+        
+        localStorage.setItem('global_theme_id', id);
+        document.getElementById('theme-menu').style.display = 'none';
+        
+        // Dispatch custom event for React to pick up if needed
+        window.dispatchEvent(new CustomEvent('themeChanged', { detail: id }));
+      }
+
+      function initPaletteMenu() {
+        const list = document.getElementById('palette-list');
+        Object.keys(THEMES).forEach(id => {
+          const theme = THEMES[id];
+          const btn = document.createElement('button');
+          btn.onclick = () => applyPreset(id);
+          btn.className = "flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-black/5 transition-all text-left group";
+          btn.innerHTML = `
+            <div class="flex gap-0.5">
+              <div class="w-4 h-4 rounded-full border border-black/5" style="background:${theme.bg}"></div>
+              <div class="w-4 h-4 rounded-full border border-black/5 -ml-2" style="background:${theme.accent}"></div>
+            </div>
+            <span class="text-[10px] font-black text-black uppercase tracking-widest truncate">${theme.name}</span>
+          `;
+          list.appendChild(btn);
+        });
+      }
+
+      window.onload = () => {
+        initPaletteMenu();
+        const savedTheme = localStorage.getItem('global_theme_id');
+        if (savedTheme && THEMES[savedTheme]) {
+          applyPreset(savedTheme);
+        } else {
+          applyPreset('IVORY_EXECUTIVE');
+        }
+      };
+    </script>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
